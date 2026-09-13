@@ -1,0 +1,25 @@
+{
+	"name": "Is_ds_adls_synapse_source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Is_Adls_Storage",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Udemy"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "test1",
+				"folderPath": "output",
+				"fileSystem": "synapse"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

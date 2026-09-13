@@ -1,0 +1,33 @@
+{
+	"name": "Schedule",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Is_pp_blob_to_adls",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Day",
+				"interval": 1,
+				"startTime": "2026-09-05T02:13:00",
+				"timeZone": "India Standard Time",
+				"schedule": {
+					"minutes": [
+						15
+					],
+					"hours": [
+						14,
+						15
+					]
+				}
+			}
+		}
+	}
+}

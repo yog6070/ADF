@@ -1,0 +1,15 @@
+{
+	"name": "dev-factory-949",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "2bc6856c-132b-4069-a89b-c1f7c92bceb9",
+		"tenantId": "008b4140-825d-4f76-b1f5-12dedf7f1271"
+	}
+}

@@ -1,0 +1,29 @@
+{
+	"name": "Is_ds_blob",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Is_Blob_Storage",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Udemy"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "emp3.csv",
+				"container": "dev-blob"
+			},
+			"columnDelimiter": "|",
+			"compressionCodec": null,
+			"compressionLevel": "Optimal",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

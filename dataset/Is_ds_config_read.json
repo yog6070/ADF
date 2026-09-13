@@ -1,0 +1,44 @@
+{
+	"name": "Is_ds_config_read",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Is_Adls_Storage",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"para_dir": {
+				"type": "string"
+			},
+			"para_file_name": {
+				"type": "string"
+			},
+			"para_container": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Udemy"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().para_file_name",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().para_dir",
+					"type": "Expression"
+				},
+				"fileSystem": {
+					"value": "@dataset().para_container",
+					"type": "Expression"
+				}
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

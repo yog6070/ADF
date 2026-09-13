@@ -1,0 +1,28 @@
+{
+	"name": "Schedule_trigger_cases_record_fuly_parameterised",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Is_http_to_adls_cases_admission_datasets",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"pp_source_relative_url": "cloudboxacademy/covid19/raw/main/ecdc_data/cases_deaths.csv",
+					"pp_sink_filename": "cases_deaths.csv"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 1,
+				"startTime": "2026-09-05T12:16:00",
+				"timeZone": "India Standard Time"
+			}
+		}
+	}
+}

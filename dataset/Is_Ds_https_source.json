@@ -1,0 +1,43 @@
+{
+	"name": "Is_Ds_https_source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Is_http_lnk_udemy",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"baseURL": {
+					"value": "@dataset().BaseURL",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"relative_url": {
+				"type": "string"
+			},
+			"BaseURL": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Udemy"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": {
+					"value": "@dataset().relative_url",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

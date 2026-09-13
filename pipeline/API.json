@@ -1,0 +1,190 @@
+{
+	"name": "API",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "GET",
+						"paginationRules": {
+							"supportRFC5988": "true"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "['id']"
+								},
+								"sink": {
+									"name": "id",
+									"type": "Int16"
+								}
+							},
+							{
+								"source": {
+									"path": "['title']"
+								},
+								"sink": {
+									"name": "title",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['description']"
+								},
+								"sink": {
+									"name": "description",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['category']"
+								},
+								"sink": {
+									"name": "category",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['price']"
+								},
+								"sink": {
+									"name": "price",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"path": "['discountPercentage']"
+								},
+								"sink": {
+									"name": "discountPercentage",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"path": "['rating']"
+								},
+								"sink": {
+									"name": "products'][0]['rating",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"path": "['stock']"
+								},
+								"sink": {
+									"name": "stock",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['brand']"
+								},
+								"sink": {
+									"name": "brand",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['sku']"
+								},
+								"sink": {
+									"name": "sku",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['weight']"
+								},
+								"sink": {
+									"name": "weight",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"path": "['dimensions']['width']"
+								},
+								"sink": {
+									"name": "width",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"path": "['dimensions']['height']"
+								},
+								"sink": {
+									"name": "height",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"path": "['dimensions']['depth']"
+								},
+								"sink": {
+									"name": "depth",
+									"type": "Double"
+								}
+							}
+						],
+						"collectionReference": "$['products']"
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "RestResource1",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_adls",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2026-07-11T11:19:45Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
