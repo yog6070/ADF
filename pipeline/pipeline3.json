@@ -1,0 +1,39 @@
+{
+	"name": "pipeline3",
+	"properties": {
+		"activities": [
+			{
+				"name": "Set variable Z",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "X",
+					"value": ""
+				}
+			}
+		],
+		"variables": {
+			"X": {
+				"type": "Integer",
+				"defaultValue": 10
+			},
+			"Y": {
+				"type": "Integer",
+				"defaultValue": 20
+			},
+			"Z": {
+				"type": "Integer",
+				"defaultValue": 30
+			}
+		},
+		"folder": {
+			"name": "Udemy2Atchyut Kumar"
+		},
+		"annotations": []
+	}
+}
