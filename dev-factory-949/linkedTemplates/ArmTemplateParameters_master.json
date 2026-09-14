@@ -1,0 +1,72 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "dev-factory-949"
+		},
+		"AzureBlobStorage1_connectionString": {
+			"value": ""
+		},
+		"Is_Adls_Storage_accountKey": {
+			"value": ""
+		},
+		"Is_Blob_Storage_connectionString": {
+			"value": ""
+		},
+		"Is_lnk_AzureDatabricks__accessToken": {
+			"value": ""
+		},
+		"lnk_adls_accountKey": {
+			"value": ""
+		},
+		"lnk_adlsgen2_accountKey": {
+			"value": ""
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"value": "https://ott-keyvault49.vault.azure.net/"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_server": {
+			"value": "sqlserver49.database.windows.net"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_database": {
+			"value": "sqldb"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"value": "sqladmin"
+		},
+		"Is_Adls_Storage_properties_typeProperties_url": {
+			"value": "https://devadlsstorage949.dfs.core.windows.net/"
+		},
+		"Is_http_lnk_udemy_properties_typeProperties_url": {
+			"value": "@{linkedService().baseURL}"
+		},
+		"RestService1_properties_typeProperties_url": {
+			"value": "https://dummyjson.com/products"
+		},
+		"lnk_adls_properties_typeProperties_url": {
+			"value": "https://devadlsstorage949.dfs.core.windows.net/"
+		},
+		"lnk_adlsgen2_properties_typeProperties_url": {
+			"value": "https://devadlsstorage949.dfs.core.windows.net/"
+		},
+		"Schedule_trigger_admission_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_source_relative_url": {
+			"value": "cloudboxacademy/covid19/raw/main/ecdc_data/hospital_admissions.csv"
+		},
+		"Schedule_trigger_admission_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_sink_filename": {
+			"value": "hospital_admissions.csv"
+		},
+		"Schedule_trigger_cases_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_source_relative_url": {
+			"value": "cloudboxacademy/covid19/raw/main/ecdc_data/cases_deaths.csv"
+		},
+		"Schedule_trigger_cases_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_sink_filename": {
+			"value": "cases_deaths.csv"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
