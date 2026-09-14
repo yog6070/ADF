@@ -1,0 +1,29 @@
+{
+	"name": "scheduleweekdelete",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Delete",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"pp_container": "dev",
+					"pp_folder": "files/testing.csv",
+					"pp_file": "*"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Week",
+				"interval": 1,
+				"startTime": "2026-09-14T10:00:00",
+				"timeZone": "India Standard Time"
+			}
+		}
+	}
+}

@@ -1,0 +1,61 @@
+{
+	"name": "Delete",
+	"properties": {
+		"activities": [
+			{
+				"name": "Delete1",
+				"type": "Delete",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "ds_delete",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": {
+								"value": "@pipeline().parameters.pp_container",
+								"type": "Expression"
+							},
+							"folder": {
+								"value": "@pipeline().parameters.pp_folder",
+								"type": "Expression"
+							},
+							"file": {
+								"value": "@pipeline().parameters.pp_file",
+								"type": "Expression"
+							}
+						}
+					},
+					"enableLogging": false,
+					"storeSettings": {
+						"type": "AzureBlobFSReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					}
+				}
+			}
+		],
+		"parameters": {
+			"pp_container": {
+				"type": "string"
+			},
+			"pp_folder": {
+				"type": "string"
+			},
+			"pp_file": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Udemy2Atchyut Kumar"
+		},
+		"annotations": []
+	}
+}

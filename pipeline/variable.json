@@ -1,0 +1,63 @@
+{
+	"name": "variable",
+	"properties": {
+		"activities": [
+			{
+				"name": "Set variable X changing",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "X",
+					"value": 5
+				}
+			},
+			{
+				"name": "Set variable Z",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Set variable X changing",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "Z",
+					"value": {
+						"value": "@add(variables('X'),variables('Y'))",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"X": {
+				"type": "Integer",
+				"defaultValue": 10
+			},
+			"Y": {
+				"type": "Integer",
+				"defaultValue": 20
+			},
+			"Z": {
+				"type": "Integer",
+				"defaultValue": 30
+			}
+		},
+		"folder": {
+			"name": "Udemy2Atchyut Kumar"
+		},
+		"annotations": []
+	}
+}

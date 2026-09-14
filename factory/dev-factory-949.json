@@ -1,6 +1,12 @@
 {
 	"name": "dev-factory-949",
 	"properties": {
+		"globalParameters": {
+			"Env": {
+				"type": "string",
+				"value": "dev"
+			}
+		},
 		"trustModeClaimForMi": {
 			"value": "Disabled",
 			"editable": true

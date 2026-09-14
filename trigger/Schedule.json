@@ -9,13 +9,19 @@
 					"referenceName": "Is_pp_blob_to_adls",
 					"type": "PipelineReference"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "pipeline2",
+					"type": "PipelineReference"
+				}
 			}
 		],
 		"type": "ScheduleTrigger",
 		"typeProperties": {
 			"recurrence": {
 				"frequency": "Day",
-				"interval": 1,
+				"interval": 5,
 				"startTime": "2026-09-05T02:13:00",
 				"timeZone": "India Standard Time",
 				"schedule": {
