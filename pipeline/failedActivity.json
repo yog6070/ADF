@@ -1,0 +1,21 @@
+{
+	"name": "failedActivity",
+	"properties": {
+		"activities": [
+			{
+				"name": "Fail",
+				"type": "Fail",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"message": "Intentionally failed",
+					"errorCode": "400"
+				}
+			}
+		],
+		"folder": {
+			"name": "Udemy2Atchyut Kumar"
+		},
+		"annotations": []
+	}
+}
