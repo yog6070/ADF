@@ -41,6 +41,28 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/MetadataDrivenCopyTask_8er_ControlDS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "MetadataDrivenCopyTask_8er_20260814"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "MainControlTable_8er"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/MetadataDrivenCopyTask_8er_SourceDS')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1028,6 +1050,7 @@
 				"lastPublishTime": "2026-08-14T16:52:07Z"
 			},
 			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/MetadataDrivenCopyTask_8er_ControlDS')]",
 				"[concat(variables('factoryId'), '/pipelines/MetadataDrivenCopyTask_8er_BottomLevel')]"
 			]
 		},
@@ -1164,6 +1187,7 @@
 				"lastPublishTime": "2026-08-14T16:52:08Z"
 			},
 			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/MetadataDrivenCopyTask_8er_ControlDS')]",
 				"[concat(variables('factoryId'), '/pipelines/MetadataDrivenCopyTask_8er_MiddleLevel')]"
 			]
 		}
