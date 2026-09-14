@@ -61,6 +61,15 @@
 		},
 		"Schedule_trigger_cases_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_sink_filename": {
 			"value": "cases_deaths.csv"
+		},
+		"scheduleweekdelete_properties_Delete_parameters_pp_container": {
+			"value": "dev"
+		},
+		"scheduleweekdelete_properties_Delete_parameters_pp_folder": {
+			"value": "files/testing.csv"
+		},
+		"scheduleweekdelete_properties_Delete_parameters_pp_file": {
+			"value": "*"
 		}
 	}
 }

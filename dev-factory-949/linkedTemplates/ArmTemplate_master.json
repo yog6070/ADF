@@ -83,6 +83,18 @@
 			"type": "string",
 			"defaultValue": "cases_deaths.csv"
 		},
+		"scheduleweekdelete_properties_Delete_parameters_pp_container": {
+			"type": "string",
+			"defaultValue": "dev"
+		},
+		"scheduleweekdelete_properties_Delete_parameters_pp_folder": {
+			"type": "string",
+			"defaultValue": "files/testing.csv"
+		},
+		"scheduleweekdelete_properties_Delete_parameters_pp_file": {
+			"type": "string",
+			"defaultValue": "*"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -172,12 +184,6 @@
 					},
 					"AzureSqlDatabase1_properties_typeProperties_userName": {
 						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_userName')]"
-					},
-					"Schedule_trigger_admission_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_source_relative_url": {
-						"value": "[parameters('Schedule_trigger_admission_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_source_relative_url')]"
-					},
-					"Schedule_trigger_admission_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_sink_filename": {
-						"value": "[parameters('Schedule_trigger_admission_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_sink_filename')]"
 					}
 				}
 			},
@@ -199,11 +205,26 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"Schedule_trigger_admission_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_source_relative_url": {
+						"value": "[parameters('Schedule_trigger_admission_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_source_relative_url')]"
+					},
+					"Schedule_trigger_admission_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_sink_filename": {
+						"value": "[parameters('Schedule_trigger_admission_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_sink_filename')]"
+					},
 					"Schedule_trigger_cases_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_source_relative_url": {
 						"value": "[parameters('Schedule_trigger_cases_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_source_relative_url')]"
 					},
 					"Schedule_trigger_cases_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_sink_filename": {
 						"value": "[parameters('Schedule_trigger_cases_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_sink_filename')]"
+					},
+					"scheduleweekdelete_properties_Delete_parameters_pp_container": {
+						"value": "[parameters('scheduleweekdelete_properties_Delete_parameters_pp_container')]"
+					},
+					"scheduleweekdelete_properties_Delete_parameters_pp_folder": {
+						"value": "[parameters('scheduleweekdelete_properties_Delete_parameters_pp_folder')]"
+					},
+					"scheduleweekdelete_properties_Delete_parameters_pp_file": {
+						"value": "[parameters('scheduleweekdelete_properties_Delete_parameters_pp_file')]"
 					}
 				}
 			},
