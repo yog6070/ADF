@@ -22,11 +22,11 @@
 			"recurrence": {
 				"frequency": "Day",
 				"interval": 1,
-				"startTime": "2026-09-15T22:34:00",
+				"startTime": "2026-09-15T22:38:00",
 				"timeZone": "India Standard Time",
 				"schedule": {
 					"minutes": [
-						34
+						38
 					],
 					"hours": [
 						22
