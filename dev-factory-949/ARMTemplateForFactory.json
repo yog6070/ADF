@@ -75,6 +75,10 @@
 			"type": "string",
 			"defaultValue": "hospital_admissions.csv"
 		},
+		"Schedule_trigger_admission_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_baseURL": {
+			"type": "string",
+			"defaultValue": "https://github.com"
+		},
 		"Schedule_trigger_cases_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_source_relative_url": {
 			"type": "string",
 			"defaultValue": "cloudboxacademy/covid19/raw/main/ecdc_data/cases_deaths.csv"
@@ -82,6 +86,10 @@
 		"Schedule_trigger_cases_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_sink_filename": {
 			"type": "string",
 			"defaultValue": "cases_deaths.csv"
+		},
+		"Schedule_trigger_cases_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_baseURL": {
+			"type": "string",
+			"defaultValue": "https://github.com"
 		},
 		"scheduleweekdelete_properties_Delete_parameters_pp_container": {
 			"type": "string",
@@ -3412,7 +3420,8 @@
 						},
 						"parameters": {
 							"pp_source_relative_url": "[parameters('Schedule_trigger_admission_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_source_relative_url')]",
-							"pp_sink_filename": "[parameters('Schedule_trigger_admission_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_sink_filename')]"
+							"pp_sink_filename": "[parameters('Schedule_trigger_admission_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_sink_filename')]",
+							"pp_baseURL": "[parameters('Schedule_trigger_admission_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_baseURL')]"
 						}
 					}
 				],
@@ -3436,7 +3445,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Started",
+				"runtimeState": "Stopped",
 				"pipelines": [
 					{
 						"pipelineReference": {
@@ -3445,7 +3454,8 @@
 						},
 						"parameters": {
 							"pp_source_relative_url": "[parameters('Schedule_trigger_cases_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_source_relative_url')]",
-							"pp_sink_filename": "[parameters('Schedule_trigger_cases_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_sink_filename')]"
+							"pp_sink_filename": "[parameters('Schedule_trigger_cases_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_sink_filename')]",
+							"pp_baseURL": "[parameters('Schedule_trigger_cases_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_baseURL')]"
 						}
 					}
 				],

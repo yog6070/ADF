@@ -56,11 +56,17 @@
 		"Schedule_trigger_admission_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_sink_filename": {
 			"value": "hospital_admissions.csv"
 		},
+		"Schedule_trigger_admission_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_baseURL": {
+			"value": "https://github.com"
+		},
 		"Schedule_trigger_cases_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_source_relative_url": {
 			"value": "cloudboxacademy/covid19/raw/main/ecdc_data/cases_deaths.csv"
 		},
 		"Schedule_trigger_cases_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_sink_filename": {
 			"value": "cases_deaths.csv"
+		},
+		"Schedule_trigger_cases_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_baseURL": {
+			"value": "https://github.com"
 		},
 		"scheduleweekdelete_properties_Delete_parameters_pp_container": {
 			"value": "dev"
