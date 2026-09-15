@@ -1,0 +1,31 @@
+{
+	"name": "ds_isHttpEropecovid",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "lnk_http_EuropeCovid",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"ds_RelativeURL": {
+				"type": "string",
+				"defaultValue": "cloudboxacademy/covid19/raw/main/ecdc_data/cases_deaths.csv"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": {
+					"value": "@dataset().ds_RelativeURL",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
