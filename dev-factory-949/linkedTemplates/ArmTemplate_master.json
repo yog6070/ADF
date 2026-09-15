@@ -31,6 +31,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'lnk_adlsgen2'"
 		},
+		"lnk_gen2_EuropeCovid_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'lnk_gen2_EuropeCovid'"
+		},
 		"AzureKeyVault1_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://ott-keyvault49.vault.azure.net/"
@@ -66,6 +70,14 @@
 		"lnk_adlsgen2_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://devadlsstorage949.dfs.core.windows.net/"
+		},
+		"lnk_gen2_EuropeCovid_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://devadlsstorage949.dfs.core.windows.net/"
+		},
+		"lnk_http_EuropeCovid_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://github.com"
 		},
 		"Schedule_trigger_admission_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_source_relative_url": {
 			"type": "string",
@@ -148,6 +160,9 @@
 					"lnk_adlsgen2_accountKey": {
 						"value": "[parameters('lnk_adlsgen2_accountKey')]"
 					},
+					"lnk_gen2_EuropeCovid_accountKey": {
+						"value": "[parameters('lnk_gen2_EuropeCovid_accountKey')]"
+					},
 					"AzureKeyVault1_properties_typeProperties_baseUrl": {
 						"value": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
 					},
@@ -165,6 +180,12 @@
 					},
 					"lnk_adlsgen2_properties_typeProperties_url": {
 						"value": "[parameters('lnk_adlsgen2_properties_typeProperties_url')]"
+					},
+					"lnk_gen2_EuropeCovid_properties_typeProperties_url": {
+						"value": "[parameters('lnk_gen2_EuropeCovid_properties_typeProperties_url')]"
+					},
+					"lnk_http_EuropeCovid_properties_typeProperties_url": {
+						"value": "[parameters('lnk_http_EuropeCovid_properties_typeProperties_url')]"
 					}
 				}
 			},

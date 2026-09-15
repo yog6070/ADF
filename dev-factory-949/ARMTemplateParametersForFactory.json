@@ -23,6 +23,9 @@
 		"lnk_adlsgen2_accountKey": {
 			"value": ""
 		},
+		"lnk_gen2_EuropeCovid_accountKey": {
+			"value": ""
+		},
 		"AzureKeyVault1_properties_typeProperties_baseUrl": {
 			"value": "https://ott-keyvault49.vault.azure.net/"
 		},
@@ -49,6 +52,12 @@
 		},
 		"lnk_adlsgen2_properties_typeProperties_url": {
 			"value": "https://devadlsstorage949.dfs.core.windows.net/"
+		},
+		"lnk_gen2_EuropeCovid_properties_typeProperties_url": {
+			"value": "https://devadlsstorage949.dfs.core.windows.net/"
+		},
+		"lnk_http_EuropeCovid_properties_typeProperties_url": {
+			"value": "https://github.com"
 		},
 		"Schedule_trigger_admission_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_source_relative_url": {
 			"value": "cloudboxacademy/covid19/raw/main/ecdc_data/hospital_admissions.csv"
