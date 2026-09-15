@@ -11,7 +11,8 @@
 				},
 				"parameters": {
 					"pp_source_relative_url": "cloudboxacademy/covid19/raw/main/ecdc_data/hospital_admissions.csv",
-					"pp_sink_filename": "hospital_admissions.csv"
+					"pp_sink_filename": "hospital_admissions.csv",
+					"pp_baseURL": "https://github.com"
 				}
 			}
 		],
