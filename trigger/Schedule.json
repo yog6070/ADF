@@ -2,7 +2,7 @@
 	"name": "Schedule",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Stopped",
+		"runtimeState": "Started",
 		"pipelines": [
 			{
 				"pipelineReference": {
@@ -14,6 +14,16 @@
 				"pipelineReference": {
 					"referenceName": "pipeline2",
 					"type": "PipelineReference"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "pp_cases_death_data",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"pp_relative_URL": "cloudboxacademy/covid19/raw/main/ecdc_data/cases_deaths.csv",
+					"pp_file_name": "cases_deaths.csv"
 				}
 			}
 		],
