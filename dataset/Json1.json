@@ -1,0 +1,20 @@
+{
+	"name": "Json1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "lnk_gen2_EuropeCovid",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "ecdc_file_list.json",
+				"folderPath": "config_for_cases_admission_tables",
+				"fileSystem": "synapse"
+			}
+		},
+		"schema": {}
+	}
+}

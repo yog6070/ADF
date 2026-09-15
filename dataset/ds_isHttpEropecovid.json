@@ -3,12 +3,20 @@
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "lnk_http_EuropeCovid",
-			"type": "LinkedServiceReference"
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"lnk_BaseURL": {
+					"value": "@dataset().ds_BaseURL",
+					"type": "Expression"
+				}
+			}
 		},
 		"parameters": {
 			"ds_RelativeURL": {
-				"type": "string",
-				"defaultValue": "cloudboxacademy/covid19/raw/main/ecdc_data/cases_deaths.csv"
+				"type": "string"
+			},
+			"ds_BaseURL": {
+				"type": "string"
 			}
 		},
 		"annotations": [],
