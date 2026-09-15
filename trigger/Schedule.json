@@ -32,7 +32,7 @@
 			"recurrence": {
 				"frequency": "Day",
 				"interval": 1,
-				"startTime": "2026-09-12T10:30:00",
+				"startTime": "2026-09-13T22:30:00",
 				"timeZone": "India Standard Time",
 				"schedule": {
 					"minutes": [
