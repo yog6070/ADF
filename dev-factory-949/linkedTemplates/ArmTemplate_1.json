@@ -25,6 +25,33 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/Is_ds_adls_synapse_source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Is_Adls_Storage",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Udemy"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "test1",
+						"folderPath": "output",
+						"fileSystem": "synapse"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Is_ds_blob')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -339,6 +366,58 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/ds_udemy')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Is_Adls_Storage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Emp_table.csv",
+						"folderPath": "files",
+						"fileSystem": "udemy"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": false,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase1')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -634,6 +713,56 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/GetMetaDataActivity')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Get Metadata1",
+						"type": "GetMetadata",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "ds_udemy",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"fieldList": [
+								"itemName"
+							],
+							"storeSettings": {
+								"type": "AzureBlobFSReadSettings",
+								"recursive": true,
+								"enablePartitionDiscovery": false
+							},
+							"formatSettings": {
+								"type": "DelimitedTextReadSettings"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Udemy2Atchyut Kumar"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_udemy')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Is_http_to_adls_cases_admission_datasets')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -924,7 +1053,8 @@
 				"lastPublishTime": "2026-09-05T12:34:59Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Is_ds_blob')]"
+				"[concat(variables('factoryId'), '/datasets/Is_ds_blob')]",
+				"[concat(variables('factoryId'), '/datasets/Is_ds_adls_synapse_source')]"
 			]
 		},
 		{
@@ -1079,6 +1209,86 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/lookup_setVariable')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Lookup1",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"dataset": {
+								"referenceName": "ds_udemy",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "Set variable1",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Lookup1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "name",
+							"value": {
+								"value": "@activity('Lookup1').output.value[0].Prop_0",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"variables": {
+					"name": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "Udemy2Atchyut Kumar"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_udemy')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -1190,305 +1400,6 @@
 				"lastPublishTime": "2026-07-30T13:07:59Z"
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pipeline2')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Execute Pipeline1",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "Is_pp_process_population",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"folder": {
-					"name": "Udemy1"
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pp_copyfiles_adls')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Get Metadata1",
-						"type": "GetMetadata",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataset": {
-								"referenceName": "ds_adls",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"fieldList": [
-								"childItems"
-							],
-							"storeSettings": {
-								"type": "AzureBlobFSReadSettings",
-								"recursive": true,
-								"enablePartitionDiscovery": false
-							},
-							"formatSettings": {
-								"type": "DelimitedTextReadSettings"
-							}
-						}
-					},
-					{
-						"name": "ForEach",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "Get Metadata1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@activity('Get Metadata1').output",
-								"type": "Expression"
-							},
-							"batchCount": 50,
-							"activities": [
-								{
-									"name": "Copy data1",
-									"type": "Copy",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "DelimitedTextSource",
-											"storeSettings": {
-												"type": "AzureBlobFSReadSettings",
-												"recursive": false,
-												"enablePartitionDiscovery": false
-											},
-											"formatSettings": {
-												"type": "DelimitedTextReadSettings"
-											}
-										},
-										"sink": {
-											"type": "DelimitedTextSink",
-											"storeSettings": {
-												"type": "AzureBlobFSWriteSettings"
-											},
-											"formatSettings": {
-												"type": "DelimitedTextWriteSettings",
-												"quoteAllText": true,
-												"fileExtension": ".txt"
-											}
-										},
-										"enableStaging": false,
-										"translator": {
-											"type": "TabularTranslator",
-											"typeConversion": true,
-											"typeConversionSettings": {
-												"allowDataTruncation": true,
-												"treatBooleanAsNumber": false
-											}
-										}
-									},
-									"inputs": [
-										{
-											"referenceName": "ds_dyna",
-											"type": "DatasetReference",
-											"parameters": {
-												"filename": {
-													"value": "@item().name",
-													"type": "Expression"
-												}
-											}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "DelimitedText1",
-											"type": "DatasetReference",
-											"parameters": {}
-										}
-									]
-								}
-							]
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": [],
-				"lastPublishTime": "2026-04-29T05:28:33Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_adls')]",
-				"[concat(variables('factoryId'), '/datasets/ds_dyna')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/test')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Lookup1",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "JsonSource",
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "JsonReadSettings"
-								}
-							},
-							"dataset": {
-								"referenceName": "Is_ds_config_read",
-								"type": "DatasetReference",
-								"parameters": {
-									"para_dir": "config_for_cases_admission_tables",
-									"para_file_name": "ecdc_file_list_for_2_files.json",
-									"para_container": "synapse"
-								}
-							},
-							"firstRowOnly": false
-						}
-					},
-					{
-						"name": "ForEach1",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "Lookup1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@activity('Lookup1').output.value",
-								"type": "Expression"
-							},
-							"isSequential": true,
-							"activities": [
-								{
-									"name": "Set variable1",
-									"type": "SetVariable",
-									"dependsOn": [],
-									"policy": {
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"variableName": "pp_source_relative_url",
-										"value": {
-											"value": "@item().sourceRelativeURL",
-											"type": "Expression"
-										}
-									}
-								}
-							]
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"variables": {
-					"pp_source_relative_url": {
-						"type": "String"
-					}
-				},
-				"folder": {
-					"name": "Udemy1"
-				},
-				"annotations": [],
-				"lastPublishTime": "2026-09-05T14:30:44Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Is_ds_config_read')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase1",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"table_name": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": {
-						"value": "@dataset().table_name",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
-			]
 		}
 	]
 }

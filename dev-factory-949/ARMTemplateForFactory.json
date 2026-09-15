@@ -370,6 +370,56 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/GetMetaDataActivity')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Get Metadata1",
+						"type": "GetMetadata",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "ds_udemy",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"fieldList": [
+								"itemName"
+							],
+							"storeSettings": {
+								"type": "AzureBlobFSReadSettings",
+								"recursive": true,
+								"enablePartitionDiscovery": false
+							},
+							"formatSettings": {
+								"type": "DelimitedTextReadSettings"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Udemy2Atchyut Kumar"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_udemy')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Is_http_to_adls_cases_admission_datasets')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -1639,6 +1689,33 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/failedActivity')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Fail",
+						"type": "Fail",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"message": "Intentionally failed",
+							"errorCode": "400"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Udemy2Atchyut Kumar"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/increamental _Load')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -1820,6 +1897,86 @@
 				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]",
 				"[concat(variables('factoryId'), '/datasets/Parquet1')]",
 				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/lookup_setVariable')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Lookup1",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"dataset": {
+								"referenceName": "ds_udemy",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "Set variable1",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Lookup1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "name",
+							"value": {
+								"value": "@activity('Lookup1').output.value[0].Prop_0",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"variables": {
+					"name": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "Udemy2Atchyut Kumar"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_udemy')]"
 			]
 		},
 		{
@@ -2328,6 +2485,39 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/lnk_adlsgen2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_devContainer')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Is_Adls_Storage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "emp1.csv",
+						"folderPath": "files",
+						"fileSystem": "dev"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": false,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Is_Adls_Storage')]"
 			]
 		},
 		{
@@ -2928,6 +3118,60 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/ds_udemy')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Is_Adls_Storage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Emp_table.csv",
+						"folderPath": "files",
+						"fileSystem": "udemy"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": false,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Is_Adls_Storage')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage1')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -3192,7 +3436,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Stopped",
+				"runtimeState": "Started",
 				"pipelines": [
 					{
 						"pipelineReference": {
@@ -3260,33 +3504,6 @@
 			"properties": {
 				"type": "SelfHosted",
 				"typeProperties": {}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/failedActivity')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Fail",
-						"type": "Fail",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"message": "Intentionally failed",
-							"errorCode": "400"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"folder": {
-					"name": "Udemy2Atchyut Kumar"
-				},
-				"annotations": []
 			},
 			"dependsOn": []
 		}

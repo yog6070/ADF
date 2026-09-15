@@ -61,6 +61,33 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/failedActivity')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Fail",
+						"type": "Fail",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"message": "Intentionally failed",
+							"errorCode": "400"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Udemy2Atchyut Kumar"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/variable')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -291,33 +318,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/failedActivity')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Fail",
-						"type": "Fail",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"message": "Intentionally failed",
-							"errorCode": "400"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"folder": {
-					"name": "Udemy2Atchyut Kumar"
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/Is_pp_process_population')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -376,6 +376,39 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/lnk_adlsgen2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_devContainer')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Is_Adls_Storage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "emp1.csv",
+						"folderPath": "files",
+						"fileSystem": "dev"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": false,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Is_Adls_Storage')]"
 			]
 		},
 		{
@@ -545,35 +578,6 @@
 					"escapeChar": "\\",
 					"firstRowAsHeader": true,
 					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Is_Adls_Storage')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Is_ds_adls_synapse_source')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Is_Adls_Storage",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Udemy"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "test1",
-						"folderPath": "output",
-						"fileSystem": "synapse"
-					},
-					"compressionCodec": "snappy"
 				},
 				"schema": []
 			},
