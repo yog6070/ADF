@@ -15,16 +15,6 @@
 					"referenceName": "pipeline2",
 					"type": "PipelineReference"
 				}
-			},
-			{
-				"pipelineReference": {
-					"referenceName": "pp_cases_death_data",
-					"type": "PipelineReference"
-				},
-				"parameters": {
-					"pp_relative_URL": "cloudboxacademy/covid19/raw/main/ecdc_data/cases_deaths.csv",
-					"pp_file_name": "cases_deaths.csv"
-				}
 			}
 		],
 		"type": "ScheduleTrigger",
@@ -32,11 +22,11 @@
 			"recurrence": {
 				"frequency": "Day",
 				"interval": 1,
-				"startTime": "2026-09-15T22:32:00",
+				"startTime": "2026-09-15T22:34:00",
 				"timeZone": "India Standard Time",
 				"schedule": {
 					"minutes": [
-						32
+						34
 					],
 					"hours": [
 						22
