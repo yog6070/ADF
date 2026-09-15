@@ -1,6 +1,11 @@
 {
 	"name": "lnk_http_EuropeCovid",
 	"properties": {
+		"parameters": {
+			"lnk_BaseURL": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "HttpServer",
 		"typeProperties": {
