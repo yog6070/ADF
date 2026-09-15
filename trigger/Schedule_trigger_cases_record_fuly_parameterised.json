@@ -11,7 +11,8 @@
 				},
 				"parameters": {
 					"pp_source_relative_url": "cloudboxacademy/covid19/raw/main/ecdc_data/cases_deaths.csv",
-					"pp_sink_filename": "cases_deaths.csv"
+					"pp_sink_filename": "cases_deaths.csv",
+					"pp_baseURL": "https://github.com"
 				}
 			}
 		],
