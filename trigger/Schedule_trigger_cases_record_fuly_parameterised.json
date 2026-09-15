@@ -2,7 +2,7 @@
 	"name": "Schedule_trigger_cases_record_fuly_parameterised",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Started",
+		"runtimeState": "Stopped",
 		"pipelines": [
 			{
 				"pipelineReference": {
