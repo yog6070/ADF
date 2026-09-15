@@ -35,6 +35,7 @@
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
 			"firstRowAsHeader": true,
+			"nullValue": "LAPTOP-A6EOBL03\\Yogesh Hinge",
 			"quoteChar": "\""
 		},
 		"schema": []
