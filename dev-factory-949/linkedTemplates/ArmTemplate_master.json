@@ -77,7 +77,7 @@
 		},
 		"lnk_http_EuropeCovid_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://github.com"
+			"defaultValue": "@{linkedService().lnk_BaseURL}"
 		},
 		"Schedule_trigger_admission_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_source_relative_url": {
 			"type": "string",
