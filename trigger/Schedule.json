@@ -15,6 +15,15 @@
 					"referenceName": "pipeline2",
 					"type": "PipelineReference"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "Dynamic_all_table_copy",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"pp_table_name": "metadatatable"
+				}
 			}
 		],
 		"type": "ScheduleTrigger",
