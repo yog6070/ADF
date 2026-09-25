@@ -83,6 +83,10 @@
 			"type": "string",
 			"defaultValue": "@{linkedService().lnk_BaseURL}"
 		},
+		"Schedule_properties_Dynamic_all_table_copy_parameters_pp_table_name": {
+			"type": "string",
+			"defaultValue": "metadatatable"
+		},
 		"Schedule_trigger_admission_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_source_relative_url": {
 			"type": "string",
 			"defaultValue": "cloudboxacademy/covid19/raw/main/ecdc_data/hospital_admissions.csv"
@@ -258,6 +262,15 @@
 					},
 					"Schedule_trigger_cases_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_baseURL": {
 						"value": "[parameters('Schedule_trigger_cases_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_baseURL')]"
+					},
+					"scheduleweekdelete_properties_Delete_parameters_pp_container": {
+						"value": "[parameters('scheduleweekdelete_properties_Delete_parameters_pp_container')]"
+					},
+					"scheduleweekdelete_properties_Delete_parameters_pp_folder": {
+						"value": "[parameters('scheduleweekdelete_properties_Delete_parameters_pp_folder')]"
+					},
+					"scheduleweekdelete_properties_Delete_parameters_pp_file": {
+						"value": "[parameters('scheduleweekdelete_properties_Delete_parameters_pp_file')]"
 					}
 				}
 			},
@@ -279,14 +292,8 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"scheduleweekdelete_properties_Delete_parameters_pp_container": {
-						"value": "[parameters('scheduleweekdelete_properties_Delete_parameters_pp_container')]"
-					},
-					"scheduleweekdelete_properties_Delete_parameters_pp_folder": {
-						"value": "[parameters('scheduleweekdelete_properties_Delete_parameters_pp_folder')]"
-					},
-					"scheduleweekdelete_properties_Delete_parameters_pp_file": {
-						"value": "[parameters('scheduleweekdelete_properties_Delete_parameters_pp_file')]"
+					"Schedule_properties_Dynamic_all_table_copy_parameters_pp_table_name": {
+						"value": "[parameters('Schedule_properties_Dynamic_all_table_copy_parameters_pp_table_name')]"
 					}
 				}
 			},

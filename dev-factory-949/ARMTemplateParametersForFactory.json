@@ -62,6 +62,9 @@
 		"lnk_http_EuropeCovid_properties_typeProperties_url": {
 			"value": "@{linkedService().lnk_BaseURL}"
 		},
+		"Schedule_properties_Dynamic_all_table_copy_parameters_pp_table_name": {
+			"value": "metadatatable"
+		},
 		"Schedule_trigger_admission_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_source_relative_url": {
 			"value": "cloudboxacademy/covid19/raw/main/ecdc_data/hospital_admissions.csv"
 		},

@@ -7,17 +7,9 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "dev-factory-949"
 		},
-		"scheduleweekdelete_properties_Delete_parameters_pp_container": {
+		"Schedule_properties_Dynamic_all_table_copy_parameters_pp_table_name": {
 			"type": "string",
-			"defaultValue": "dev"
-		},
-		"scheduleweekdelete_properties_Delete_parameters_pp_folder": {
-			"type": "string",
-			"defaultValue": "files/testing.csv"
-		},
-		"scheduleweekdelete_properties_Delete_parameters_pp_file": {
-			"type": "string",
-			"defaultValue": "*"
+			"defaultValue": "metadatatable"
 		}
 	},
 	"variables": {
@@ -25,34 +17,133 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/scheduleweekdelete')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
+			"name": "[concat(parameters('factoryName'), '/Dynamic_all_table_copy')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"annotations": [],
-				"runtimeState": "Stopped",
-				"pipelines": [
+				"activities": [
 					{
-						"pipelineReference": {
-							"referenceName": "Delete",
-							"type": "PipelineReference"
+						"name": "Lookup metadatatable",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
 						},
-						"parameters": {
-							"pp_container": "[parameters('scheduleweekdelete_properties_Delete_parameters_pp_container')]",
-							"pp_folder": "[parameters('scheduleweekdelete_properties_Delete_parameters_pp_folder')]",
-							"pp_file": "[parameters('scheduleweekdelete_properties_Delete_parameters_pp_file')]"
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "AzureSqlTable1",
+								"type": "DatasetReference",
+								"parameters": {
+									"table_name": {
+										"value": "@pipeline().parameters.pp_table_name",
+										"type": "Expression"
+									}
+								}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Lookup metadatatable",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('Lookup metadatatable').output.value",
+								"type": "Expression"
+							},
+							"isSequential": true,
+							"activities": [
+								{
+									"name": "Copy data1",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "AzureSqlSource",
+											"queryTimeout": "02:00:00",
+											"partitionOption": "None"
+										},
+										"sink": {
+											"type": "DelimitedTextSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											},
+											"formatSettings": {
+												"type": "DelimitedTextWriteSettings",
+												"quoteAllText": true,
+												"fileExtension": ".csv"
+											}
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "AzureSqlTable1",
+											"type": "DatasetReference",
+											"parameters": {
+												"table_name": {
+													"value": "@item().TABLE_NAME",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "ds_adls",
+											"type": "DatasetReference",
+											"parameters": {}
+										}
+									]
+								}
+							]
 						}
 					}
 				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Week",
-						"interval": 1,
-						"startTime": "2026-09-14T10:00:00",
-						"timeZone": "India Standard Time"
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"pp_table_name": {
+						"type": "string"
 					}
-				}
+				},
+				"annotations": []
 			},
 			"dependsOn": []
 		},
@@ -174,6 +265,60 @@
 				"lastPublishTime": "2026-08-14T16:52:07Z"
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Schedule')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Is_pp_blob_to_adls",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "pipeline2",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "Dynamic_all_table_copy",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"pp_table_name": "[parameters('Schedule_properties_Dynamic_all_table_copy_parameters_pp_table_name')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2026-09-15T22:38:00",
+						"timeZone": "India Standard Time",
+						"schedule": {
+							"minutes": [
+								38
+							],
+							"hours": [
+								22
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Dynamic_all_table_copy')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/MetadataDrivenCopyTask_8er_TopLevel')]",
