@@ -6,12 +6,56 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "dev-factory-949"
+		},
+		"scheduleweekdelete_properties_Delete_parameters_pp_container": {
+			"type": "string",
+			"defaultValue": "dev"
+		},
+		"scheduleweekdelete_properties_Delete_parameters_pp_folder": {
+			"type": "string",
+			"defaultValue": "files/testing.csv"
+		},
+		"scheduleweekdelete_properties_Delete_parameters_pp_file": {
+			"type": "string",
+			"defaultValue": "*"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/scheduleweekdelete')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Delete",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"pp_container": "[parameters('scheduleweekdelete_properties_Delete_parameters_pp_container')]",
+							"pp_folder": "[parameters('scheduleweekdelete_properties_Delete_parameters_pp_folder')]",
+							"pp_file": "[parameters('scheduleweekdelete_properties_Delete_parameters_pp_file')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Week",
+						"interval": 1,
+						"startTime": "2026-09-14T10:00:00",
+						"timeZone": "India Standard Time"
+					}
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/MetadataDrivenCopyTask_8er_MiddleLevel')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",

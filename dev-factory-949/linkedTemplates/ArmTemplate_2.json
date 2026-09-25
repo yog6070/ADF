@@ -30,18 +30,6 @@
 		"Schedule_trigger_cases_record_fuly_parameterised_properties_Is_http_to_adls_cases_admission_datasets_parameters_pp_baseURL": {
 			"type": "string",
 			"defaultValue": "https://github.com"
-		},
-		"scheduleweekdelete_properties_Delete_parameters_pp_container": {
-			"type": "string",
-			"defaultValue": "dev"
-		},
-		"scheduleweekdelete_properties_Delete_parameters_pp_folder": {
-			"type": "string",
-			"defaultValue": "files/testing.csv"
-		},
-		"scheduleweekdelete_properties_Delete_parameters_pp_file": {
-			"type": "string",
-			"defaultValue": "*"
 		}
 	},
 	"variables": {
@@ -1290,6 +1278,98 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/check_file_count')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Get Metadata1",
+						"type": "GetMetadata",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "ds_adls",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"fieldList": [
+								"childItems"
+							],
+							"storeSettings": {
+								"type": "AzureBlobFSReadSettings",
+								"enablePartitionDiscovery": false
+							},
+							"formatSettings": {
+								"type": "DelimitedTextReadSettings"
+							}
+						}
+					},
+					{
+						"name": "Set variable1",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Get Metadata1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "file_count",
+							"value": {
+								"value": "@length(activity('Get Metadata1').output.childItems)",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "If Condition1",
+						"type": "IfCondition",
+						"dependsOn": [
+							{
+								"activity": "Set variable1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@equals(variables('file_count'),3)",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"variables": {
+					"file_count": {
+						"type": "Integer"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/MetadataDrivenCopyTask_8er_BottomLevel')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -2099,40 +2179,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/Is_http_to_adls_cases_admission_datasets')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/scheduleweekdelete')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Stopped",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "Delete",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"pp_container": "[parameters('scheduleweekdelete_properties_Delete_parameters_pp_container')]",
-							"pp_folder": "[parameters('scheduleweekdelete_properties_Delete_parameters_pp_folder')]",
-							"pp_file": "[parameters('scheduleweekdelete_properties_Delete_parameters_pp_file')]"
-						}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Week",
-						"interval": 1,
-						"startTime": "2026-09-14T10:00:00",
-						"timeZone": "India Standard Time"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Delete')]"
 			]
 		}
 	]
